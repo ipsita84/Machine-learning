@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Visualize the output of a multilayer network
-# Input is 2-dimensional (and taken to be the x,y coordinates in an image)
-# Output is 1-dimensional (and taken to be the color at that pixel)
+# Input is 2 neurons (and taken to be the x,y coordinates in an image)
+# Output is 1 neuron (and taken to be the color at that pixel)
 #
 # This demonstrates how to set up the feedforward through
 # a neural network, as well as how to apply batch processing
@@ -15,20 +15,24 @@ import matplotlib.pyplot as plt # for plotting
 #%matplotlib inline
 
 # how to apply a single layer:
-def apply_layer_new(y_in,w,b): # a function that applies a layer    
+def apply_layer_new(y_in,w,b): # a function that applies a layer, w=weights, b=biases    
     z=dot(y_in,w)+b # note different order in matrix product!
-    return(1/(1+exp(-z)))
+    return(1/(1+exp(-z))) # sigmoid function
 
 # setting up all the network, with random weighst & biases:
 Nlayers=20 # not counting the input layer & the output layer
-LayerSize=100
+LayerSize=100  # 100 neurons
 
 # all the weights in the intermediate layers:
 Weights=random.uniform(low=-3,high=3,size=[Nlayers,LayerSize,LayerSize])
+#this is an array of dim Nlayers*LayerSize*LayerSize
 Biases=random.uniform(low=-1,high=1,size=[Nlayers,LayerSize])
+# numpy.random.uniform(low=0.0, high=1.0, size=None): Draw samples from a uniform distribution.
+#Samples are uniformly distributed over the half-open interval [low, high) (includes low, but excludes high)
 
 # for the first hidden layer (coming in from the input layer)
-WeightsFirst=random.uniform(low=-1,high=1,size=[2,LayerSize])
+WeightsFirst=random.uniform(low=-1,high=1,size=[2,LayerSize]) 
+# Input is 2-dimensional (and taken to be the x,y coordinates in an image)
 BiasesFirst=random.uniform(low=-1,high=1,size=LayerSize)
 
 # for the final layer (i.e. the output neuron)
